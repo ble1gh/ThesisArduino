@@ -39,7 +39,7 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // our servo # counter
 uint8_t servonum = 0;
-uint8_t servo2 = 1;
+uint8_t servotwo = 1;
 
 void setup() {
   Serial.begin(9600);
@@ -92,9 +92,9 @@ void loop() {
   for (uint16_t pulselen = SERVOMIN; pulselen < SERVOMAX; pulselen++) {
     pwm.setPWM(servonum, 0, pulselen);
   }
-  Serial.println(servo2);
+  Serial.println(servotwo);
   for (uint16_t pulselen = SERVOMIN; pulselen < SERVOMAX; pulselen++) {
-    pwm.setPWM(servo2, 0, pulselen);
+    pwm.setPWM(servotwo, 0, pulselen);
   }
 
   delay(500);
@@ -102,7 +102,7 @@ void loop() {
     pwm.setPWM(servonum, 0, pulselen);
   }
   for (uint16_t pulselen = SERVOMAX; pulselen > SERVOMIN; pulselen--) {
-    pwm.setPWM(servo2, 0, pulselen);
+    pwm.setPWM(servotwo, 0, pulselen);
   }
 
 
@@ -113,16 +113,10 @@ void loop() {
   for (uint16_t microsec = USMIN; microsec < USMAX; microsec++) {
     pwm.writeMicroseconds(servonum, microsec);
   }
-  for (uint16_t microsec = USMIN; microsec < USMAX; microsec++) {
-    pwm.writeMicroseconds(servo2, microsec);
-  }
 
   delay(500);
   for (uint16_t microsec = USMAX; microsec > USMIN; microsec--) {
     pwm.writeMicroseconds(servonum, microsec);
-  }
-  for (uint16_t microsec = USMAX; microsec > USMIN; microsec--) {
-    pwm.writeMicroseconds(servo2, microsec);
   }
   }
   0;
