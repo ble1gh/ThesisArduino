@@ -88,28 +88,37 @@ void loop() {
   // Drive each servo one at a time using setPWM()
   while (1)
   {
+    /*
   Serial.println(servonum);
   for (uint16_t pulselen = SERVOMIN; pulselen < SERVOMAX; pulselen++) {
     pwm.setPWM(servonum, 0, pulselen);
   }
+
   Serial.println(servotwo);
   for (uint16_t pulselen = SERVOMIN; pulselen < SERVOMAX; pulselen++) {
     pwm.setPWM(servotwo, 0, pulselen);
-  }
+  }*/
+  pwm.setPWM(servonum, 0, 300);
+  delay(1000);
+  pwm.setPWM(servonum, 0, 200);
 
-  delay(500);
+  
+  /*
   for (uint16_t pulselen = SERVOMAX; pulselen > SERVOMIN; pulselen--) {
     pwm.setPWM(servonum, 0, pulselen);
   }
   for (uint16_t pulselen = SERVOMAX; pulselen > SERVOMIN; pulselen--) {
     pwm.setPWM(servotwo, 0, pulselen);
-  }
+  }*/
 
-
-  delay(500);
+  delay(1000);
+  pwm.setPWM(servonum, 0, 300);
+    servonum++;
+  if (servonum > 3) servonum = 0; // Testing the first 8 servo channels
 
   // Drive each servo one at a time using writeMicroseconds(), it's not precise due to calculation rounding!
   // The writeMicroseconds() function is used to mimic the Arduino Servo library writeMicroseconds() behavior. 
+  /*
   for (uint16_t microsec = USMIN; microsec < USMAX; microsec++) {
     pwm.writeMicroseconds(servonum, microsec);
   }
@@ -117,11 +126,9 @@ void loop() {
   delay(500);
   for (uint16_t microsec = USMAX; microsec > USMIN; microsec--) {
     pwm.writeMicroseconds(servonum, microsec);
-  }
+  }*/
   }
   0;
-  delay(500);
 
-//  servonum++;
-//  if (servonum > 7) servonum = 0; // Testing the first 8 servo channels
+
 }
