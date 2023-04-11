@@ -114,7 +114,6 @@ void loop() {
     pwm.setPWM(servo2, 0, pos2);
   }
   Serial.println("Exited Loop 1!");  
-  delay(500);
 
   for (uint16_t sweepos = 0; sweepos < SWEEPLEN; sweepos++) {
     Serial.println("sweepos:");
@@ -143,7 +142,6 @@ void loop() {
     pwm.setPWM(servo2, 0, pos1);
   }
   Serial.println("Exited Loop 3!");  
-  delay(500);
 
   for (uint16_t sweepos = 0; sweepos < SWEEPLEN; sweepos++) {
     Serial.println("sweepos:");
@@ -158,7 +156,7 @@ void loop() {
     pwm.setPWM(servo2, 0, pos1);
   }
   Serial.println("Exited Loop 4!");
-  delay(500);
+  
   /*
   for (uint16_t pulselen = SERVOMIN; pulselen < SERVOMAX; pulselen++) {
     pwm.setPWM(servotwo, 0, pulselen);
