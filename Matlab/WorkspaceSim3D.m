@@ -5,8 +5,15 @@ clear
 L = 70e-3; % (m) from spine architecture 
 
 %These values give a turn angle (theta) and a bend amount (Rc)
-Rc = [linspace(3*L/(2*pi),2*L/pi,50) linspace(2*L/pi,.8,100) linspace(-.8,-2*L/pi,100) linspace(-2*L/pi,-3*L/(2*pi),50)]; 
-theta = linspace(0,2*pi);
+minR = log10(3*L/(2*pi));
+maxR = log10(2);
+Rc = [logspace(minR,maxR,50)];
+
+%2 alternative ways to get acceptable Rc values
+% Rc = [linspace(3*L/(2*pi),2*L/pi,50) linspace(2*L/pi,.8,100) linspace(-.8,-2*L/pi,100) linspace(-2*L/pi,-3*L/(2*pi),50)]; 
+% Rc = [linspace(3*L/(2*pi),2*L/pi,50) linspace(2*L/pi,.8,100)]; 
+
+theta = linspace(0,2*pi,50);
 phi = L./Rc;
 
 %initiate position variables
@@ -22,10 +29,11 @@ for i = 1:length(theta)
     z(i,:) = Rc.*sin(L./Rc);
 end
 
+
 %plot result
 figure(1)
-surf(x,y,z,'FaceColor','interp','FaceAlpha',0.9,'EdgeColor','none')
-%surf(x,y,z,'FaceColor',"#4DBEEE",'FaceAlpha',0.7)
+%surf(x,y,z,'FaceColor','interp','FaceAlpha',0.9,'EdgeColor','none')
+surf(x,y,z,'FaceColor',"#4DBEEE",'FaceAlpha',0.7)
 title('Simulated Reachable Region, 3D')
 xlabel('x (m)')
 ylabel('y (m)')
