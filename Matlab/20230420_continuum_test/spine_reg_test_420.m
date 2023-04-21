@@ -1,7 +1,10 @@
 % restart
 close all; clear;
 
-% spine reg points
+%Below, I'm using the coordinate system the way I've been thinking about
+%it, but the solidworks model for the spine has a different orientation, so
+%these commented ones are in that orientation? But that didn't have the
+%result I was looking for.
 % c1 = [-106.07 0 -106.07]';
 % c2 = [106.07 0 106.07]';
 % c3 = [-106.07 0 106.07]';
@@ -11,6 +14,7 @@ close all; clear;
 % b3 = [0 5 6]';
 % b4 = [0 5 -6]';
 
+% spine reg points
 c1 = [-106.07 106.07 0]';
 c2 = [106.07 -106.07 0]';
 c3 = [-106.07 -106.07 0]';
