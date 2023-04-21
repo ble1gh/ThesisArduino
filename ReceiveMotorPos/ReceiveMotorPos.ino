@@ -58,22 +58,22 @@ void setup() {
 void loop() {
 
   uint16_t pos2 = 250;
-  uint16_t motorvalue[4];
+  uint16_t motorvalue[4] = { 0 };
   uint8_t mybuffer[20] = { 0 };
   uint16_t mybufindex = 0;
 
+  while (1) {
+    while ((SerialUSB.available() > 0) && (mybufindex < 8)) {
+      uint8_t value = SerialUSB.read();
+      Serial.print("I received: {");
+      Serial.print(value, DEC);
+      Serial.println("}");
 
-  while ((SerialUSB.available() > 0) && (mybufindex < 8)) {
-    uint8_t value = SerialUSB.read();
-    Serial.print("I received: {");
-    Serial.print(value, DEC);
-    Serial.println("}");
+      mybuffer[mybufindex] = value;
+      mybufindex++;
 
-    mybuffer[mybufindex] = value;
-    mybufindex++;
-
-    //SerialUSB.write(value);
-    /*
+      //SerialUSB.write(value);
+      /*
     if ((value > SERVOMIN) && (value < SERVOMAX)) {
     motorvalue = value;
     SerialUSB.write(motorvalue);
@@ -82,11 +82,12 @@ void loop() {
     pwm.setPWM(1, 0, motorvalue);
     }    
     */
-  }
+    }
 
-  if (mybufindex == 8) {
-    for (uint8_t i = 0; i < (mybufindex/2); i++) {
-      motorvalue[i] = (((uint16_t)mybuffer[2*i+1]) << 8) + ((uint16_t)mybuffer[2*i]);
+    if (mybufindex == 8) {
+      for (uint8_t i = 0; i < (mybufindex / 2); i++) {
+        motorvalue[i] = (((uint16_t)mybuffer[2 * i + 1]) << 8) + ((uint16_t)mybuffer[2 * i]);
+        /*
       Serial.print("mybuffer[2*i]: ");
       Serial.println(mybuffer[2*i]);
       Serial.print("mybuffer[2*i+1]: ");
@@ -95,29 +96,46 @@ void loop() {
       Serial.print(i);
       Serial.print(": ");
       Serial.println(motorvalue[i]);
-    }
+      */
+      }
 
-    for (uint8_t i = 0; i < 4; i++) {
-      uint8_t highbyte = (uint8_t) ((motorvalue[i] & 0xff00)>>8);
-      uint8_t lowbyte = (uint8_t) ((motorvalue[i] & 0xff));
-      
-      SerialUSB.write(lowbyte);
-      SerialUSB.write(highbyte);
+      for (uint8_t i = 0; i < 4; i++) {
+        uint8_t highbyte = (uint8_t)((motorvalue[i] & 0xff00) >> 8);
+        uint8_t lowbyte = (uint8_t)((motorvalue[i] & 0xff));
+
+        SerialUSB.write(lowbyte);
+        SerialUSB.write(highbyte);
+        /*
       Serial.print("lowbyte: ");
       Serial.println(lowbyte);
       Serial.print("highbyte: ");
       Serial.println(highbyte);
+      */
+      }
+      Serial.print("motorvalue[1]: ");
+      Serial.println(motorvalue[0]);
+      Serial.print("motorvalue[2]: ");
+      Serial.println(motorvalue[1]);
+      Serial.print("motorvalue[3]: ");
+      Serial.println(motorvalue[2]);
+      Serial.print("motorvalue[4]: ");
+      Serial.println(motorvalue[3]);
     }
 
+    mybufindex = 0;
+
+    uint16_t u1 = motorvalue[0];
+    uint16_t u2 = motorvalue[1];
+    uint16_t u3 = motorvalue[2];
+    uint16_t u4 = motorvalue[3];
+
+    pwm.setPWM(servo1, 0, u1);
+    pwm.setPWM(servo2, 0, u2);
+    pwm.setPWM(servo3, 0, u3);
+    pwm.setPWM(servo4, 0, u4);
+
   }
 
-  mybufindex = 0;
 
-  /*
-  for (int i = 0; i < 4; i++) {
-  	pwm.setPWM(i, 0, motorvalue);
+    //pwm.setPWM(1, 0, pos2);
   }
-*/
-
-  //pwm.setPWM(1, 0, pos2);
-}

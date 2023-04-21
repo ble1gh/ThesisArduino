@@ -40,6 +40,8 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 // our servo # counter
 uint8_t servo1 = 0;
 uint8_t servo2 = 1;
+uint8_t servo3 = 2;
+uint8_t servo4 = 3;
 
 void setup() {
   Serial.begin(9600);
@@ -90,6 +92,8 @@ void loop() {
   {
   pwm.setPWM(servo1, 0, 300);
   pwm.setPWM(servo2, 0, 300);  
+  pwm.setPWM(servo3, 0, 300);
+  pwm.setPWM(servo4, 0, 300);  
   }
   0;
 }
