@@ -3,9 +3,9 @@
 %send them to arduino
 clear
 
-L = 70; % (mm) from spine architecture 
-d = 4; % (mm) "
-disk_diameter = 15; % (mm) diameter of the disk
+L = 70e-3; % (m) from spine architecture 
+d = 4e-3;
+disk_diameter = 15e-3; % (m) diameter of the disk
 PWMrange = 500-100;
 
 %These values give a turn angle (theta) and a bend amount (Rc)
@@ -15,23 +15,6 @@ Rc = [logspace(minR,maxR,25)];
 
 theta = linspace(0,2*pi,25);
 phi = L./Rc;
-
-%One Circle
-Rc = Rc(1);
-phi = phi(1);
-
-%initiate state and output vars
-x = zeros(3,length(theta));
-dl = zeros(4,length(theta));
-
-x(1,:) = cos(theta)*Rc*(1-cos(L/Rc));
-x(2,:) = sin(theta)*Rc*(1-cos(L/Rc));
-x(3,:) = Rc*sin(L/Rc);
-
-dl(1,:) = (phi*(Rc-d*cos(theta))-L);
-dl(2,:) = (phi*(Rc+d*cos(theta))-L);
-dl(3,:) = (phi*(Rc-d*sin(theta))-L);
-dl(4,:) = (phi*(Rc+d*sin(theta))-L);
 
 %initiate state variable
 % x = zeros(3,length(theta)*length(Rc));
@@ -50,6 +33,21 @@ dl(4,:) = (phi*(Rc+d*sin(theta))-L);
 %     dl(3,((i-1)*l+1):i*l) = sin(theta).*(phi(i)*(Rc(i)-d*sin(theta))-L);
 %     dl(4,((i-1)*l+1):i*l) = sin(theta).*(phi(i)*(Rc(i)+d*sin(theta))-L);
 % end
+
+Rc = Rc(1);
+phi = phi(1);
+
+x = zeros(3,length(theta));
+dl = zeros(4,length(theta));
+
+x(1,:) = cos(theta)*Rc*(1-cos(L/Rc));
+x(2,:) = sin(theta)*Rc*(1-cos(L/Rc));
+x(3,:) = Rc*sin(L/Rc);
+
+dl(1,:) = cos(theta).*(phi*(Rc-d*cos(theta))-L);
+dl(2,:) = cos(theta).*(phi*(Rc+d*cos(theta))-L);
+dl(3,:) = sin(theta).*(phi*(Rc-d*sin(theta))-L);
+dl(4,:) = sin(theta).*(phi*(Rc+d*sin(theta))-L);
 
 %turn length change values into input values
 u = ones(4,length(dl))*300;
@@ -78,8 +76,8 @@ grid on
 
 figure(3)
 t = 1:length(u);
-plot(theta,dl(1,:),theta,dl(2,:),theta,dl(3,:),theta,dl(4,:),theta,(phi*(Rc-d*cos(theta))-L))
-legend('1','2','3','4','(phi*(Rc-d*cos(theta))-L)')
+plot(theta,dl(1,:),theta,dl(2,:),theta,dl(3,:),theta,dl(4,:),theta,cos(theta)*,theta,sin(theta))
+legend('1','2','3','4','cos','sin')
 xlabel('theta')
 ylabel('dl')
 grid on
