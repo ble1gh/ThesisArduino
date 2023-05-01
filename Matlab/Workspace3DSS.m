@@ -77,3 +77,5 @@ for k = 1:length(u)
     %w = waitforbuttonpress;
     pause(.5)
 end
+
+clear device
