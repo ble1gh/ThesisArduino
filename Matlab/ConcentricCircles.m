@@ -38,8 +38,8 @@ phi = L./Rc;
 x = zeros(3,length(theta)*length(Rc));
 dl = zeros(4,length(theta)*length(Rc));
 
-% for a given theta, an arc is defined along the range of possible bend
-% radiuses which each give an (x,y,z) coordinate
+% for a given Rc, an arc is defined along the range of possible
+% thetas which each give an (x,y,z) coordinate, and thus a ring
 l = length(theta);
 for i = 1:length(Rc)
     x(1,((i-1)*l+1):i*l) = cos(theta)*Rc(i)*(1-cos(L/Rc(i)));
