@@ -2,11 +2,11 @@
 %Simulation of 3D reachable area for one segment
 clear
 
-L = 70e-3; % (m) from spine architecture 
+L = 56; % (m) from spine architecture 
 
 %These values give a turn angle (theta) and a bend amount (Rc)
 minR = log10(3*L/(2*pi));
-maxR = log10(2);
+maxR = log10(200);
 Rc = [logspace(minR,maxR,50)];
 
 %2 alternative ways to get acceptable Rc values
@@ -38,6 +38,6 @@ title('Simulated Reachable Region, 3D')
 xlabel('x (m)')
 ylabel('y (m)')
 zlabel('z (m)')
-axis([-.07 .07 -.07 .07 0 .08])
+axis([-70 70 -70 70 0 80])
 
 

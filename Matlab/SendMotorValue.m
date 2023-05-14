@@ -6,12 +6,12 @@ device = serialport("/dev/tty.usbmodem11301",115200)
 flush(device);
 
 %Enter motor values
-pos1 = 300;
-pos3 = 300;
-pos2 = 300 + (300-pos1);
-pos4 = 300 + (300-pos3);
-motorvalue = [pos1 pos2 pos3 pos4]';
-% motorvalue = [300 300 300 300]';
+pos1 = 340;
+% pos3 = 310;
+% pos2 = 350;
+% pos4 = 350;
+motorvalue = [pos1 pos1 pos1 pos1]';
+%motorvalue = [300 300 300 300]';
 %motorvalue = u(:,250)
 
 %Write to device and read response

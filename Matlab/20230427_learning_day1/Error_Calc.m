@@ -16,9 +16,10 @@ u = table2array(motor_tab);
 neutral_motor = [300 300 300 300]';
 u = [u neutral_motor];
 output_input_history = [spinedata_in_modelspace; u];
-writematrix(output_input_history,'output_input_history_0427.csv')
+%writematrix(output_input_history,'output_input_history_0427.csv')
 
-error = sqrt((spinedata_in_modelspace(1,:)-requested_points(1,:)).^2+(spinedata_in_modelspace(2,:)-requested_points(2,:)).^2+(spinedata_in_modelspace(3,:)-requested_points(3,:)).^2);
+%error = sqrt((spinedata_in_modelspace(1,:)-requested_points(1,:)).^2+(spinedata_in_modelspace(2,:)-requested_points(2,:)).^2+(spinedata_in_modelspace(3,:)-requested_points(3,:)).^2);
+error = vecnorm(spinedata_in_modelspace(1:3,:)-requested_points(1:3,:));
 
 % load spine model
 spine_stl = stlread('dual_helix.STL');
@@ -37,10 +38,24 @@ colorbar
 hold on
 patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
 plot3(spinedata_in_modelspace(1,:),spinedata_in_modelspace(2,:),spinedata_in_modelspace(3,:),'.','MarkerSize',10)
+%plot3(requested_points(1,:),requested_points(2,:),requested_points(3,:),'.','MarkerSize',10)
 title('Model-Based Control with Error in mm from Expected Position')
 xlabel('x (mm)')
 ylabel('y (mm)')
 zlabel('z (mm)')
 grid on; axis equal;
+hold off
 
+%for debugging
+point = 2;
+figure(2)
+plot3(spinedata_in_modelspace(1,:),spinedata_in_modelspace(2,:),spinedata_in_modelspace(3,:),'.','MarkerSize',10)
+hold on;
+plot3(requested_points(1,:),requested_points(2,:),requested_points(3,:),'.','MarkerSize',10)
+plot3(spinedata_in_modelspace(1,point),spinedata_in_modelspace(2,point),spinedata_in_modelspace(3,point),'.m',requested_points(1,point),requested_points(2,point),requested_points(3,point),'.g','MarkerSize',20)
+legend('data','model','datapoint','modelpoint')
+xlabel('x (mm)')
+ylabel('y (mm)')
+zlabel('z (mm)')
+grid on; axis equal;
 hold off

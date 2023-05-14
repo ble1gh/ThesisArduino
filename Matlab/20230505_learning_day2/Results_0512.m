@@ -1,10 +1,10 @@
 close all; clear;
 
 % load transformed xyz data
-points_tab = readtable('transformed_output_0427.csv','Delimiter',',');
+points_tab = readtable('transformed_output_0512.csv','Delimiter',',');
 spinedata_in_modelspace = table2array(points_tab);
 predicted_tab = readtable('predicted.csv','Delimiter',',');
-requested
+requested_points = table2array(predicted_tab);
 
 [Xsurf,Ysurf] = meshgrid(spinedata_in_modelspace(1,:),spinedata_in_modelspace(2,:));
 Zsurf = griddata(spinedata_in_modelspace(1,:),spinedata_in_modelspace(2,:),spinedata_in_modelspace(3,:),Xsurf,Ysurf);
@@ -35,45 +35,17 @@ ylabel('y')
 zlabel('z')
 hold off;
 
-L = 56; % (mm) from spine architecture 
-
-res = 25;
+%simulated reachable area
+L = 56; % (m) from spine architecture 
 
 %These values give a turn angle (theta) and a bend amount (Rc)
 minR = log10(3*L/(2*pi));
-maxR = log10(4*L);
-% minR2 = log10(L);
-% Rc = [logspace(minR,minR2,res) logspace(minR2,maxR,res)];
-Rc = [logspace(minR,minR,res)];
+maxR = log10(200);
+Rc = [logspace(minR,maxR,50)];
 
 
-%2 alternative ways to get acceptable Rc values
-% Rc = [linspace(3*L/(2*pi),2*L/pi,50) linspace(2*L/pi,.8,100) linspace(-.8,-2*L/pi,100) linspace(-2*L/pi,-3*L/(2*pi),50)]; 
-% Rc = [linspace(3*L/(2*pi),2*L/pi,50) linspace(2*L/pi,.8,100)]; 
-
-theta = linspace(0,2*pi,res);
+theta = linspace(0,2*pi,50);
 phi = L./Rc;
-
-%plot3 compatible (ss compatible) method
-
-% %initiate position variables
-% x = zeros(3,(length(theta)*length(Rc)));
-% 
-% % for a given Rc, an arc is defined along the range of possible
-% % thetas which each give an (x,y,z) coordinate, and thus a ring
-% lt = length(theta);
-% lr = length(Rc); 
-% for i = 1:lr
-%     x(1,((i-1)*lt+1):i*lt) = cos(theta)*Rc(i)*(1-cos(L/Rc(i)));
-%     x(2,((i-1)*lt+1):i*lt) = sin(theta)*Rc(i)*(1-cos(L/Rc(i)));
-%     x(3,((i-1)*lt+1):i*lt) = Rc(i)*sin(L/Rc(i));
-% end
-% 
-% [X,Y] = meshgrid(x,y);
-% Z = griddata(x,y,z,X,Y);
-
-
-%Surf compatable method
 
 %initiate position variables
 x = zeros(length(theta),length(Rc));
@@ -87,8 +59,6 @@ for i = 1:length(theta)
     y(i,:) = sin(theta(i))*Rc.*(1-cos(L./Rc));
     z(i,:) = Rc.*sin(L./Rc);
 end
-
-
 % FV.vertices = x';
 % points = spinedata_in_modelspace';
 % [distances,surface_points] = point2trimesh(FV, 'QueryPoints', points);
@@ -109,9 +79,9 @@ grid on; axis equal;
 
 hold off;
 
-figure(3)
-surf(x,y,z,'FaceColor',"#4DBEEE",'FaceAlpha',0.7)
-title('Simulated Reachable Region, 3D')
-xlabel('x (m)')
-ylabel('y (m)')
-zlabel('z (m)')
+% figure(3)
+% surf(x,y,z,'FaceColor',"#4DBEEE",'FaceAlpha',0.7)
+% title('Simulated Reachable Region, 3D')
+% xlabel('x (m)')
+% ylabel('y (m)')
+% zlabel('z (m)')
