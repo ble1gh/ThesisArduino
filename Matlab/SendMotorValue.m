@@ -11,7 +11,7 @@ pos1 = 340;
 % pos2 = 350;
 % pos4 = 350;
 motorvalue = [pos1 pos1 pos1 pos1]';
-%motorvalue = [300 300 300 300]';
+motorvalue = [300 300 300 300]';
 %motorvalue = u(:,250)
 
 %Write to device and read response

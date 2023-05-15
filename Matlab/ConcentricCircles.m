@@ -5,8 +5,8 @@ clear
 
 L = 56; % (mm) from spine architecture 
 d = 4; % (mm) "
-disk_diameter = 15; % (mm) diameter of the disk
-PWMrange = 500-100;
+    disk_diameter = 15; % (mm) diameter of the disk
+    PWMrange = 500-100;
 res = 25;
 
 %These values give a turn angle (theta) and a bend amount (Rc)
