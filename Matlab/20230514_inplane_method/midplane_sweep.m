@@ -11,7 +11,7 @@ setmid = 340;
 res =18;
 
 %Rc range
-minR = log10(2*L/(pi));
+minR = log10(3*L/(pi));
 maxR = log10(300);
 Rc = [logspace(log10(3000),maxR,res/2) logspace(maxR,minR,res)];
 Rc = [Rc -Rc];

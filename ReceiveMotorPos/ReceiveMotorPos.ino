@@ -100,6 +100,12 @@ void loop() {
       }
 
       for (uint8_t i = 0; i < 4; i++) {
+        if (motorvalue[i] > 450) {
+          motorvalue[i] = 450;
+        }
+      }
+
+      for (uint8_t i = 0; i < 4; i++) {
         uint8_t highbyte = (uint8_t)((motorvalue[i] & 0xff00) >> 8);
         uint8_t lowbyte = (uint8_t)((motorvalue[i] & 0xff));
 
@@ -112,13 +118,13 @@ void loop() {
       Serial.println(highbyte);
       */
       }
-      Serial.print("motorvalue[1]: ");
+      Serial.print("motorvalue[1] recieved: ");
       Serial.println(motorvalue[0]);
-      Serial.print("motorvalue[2]: ");
+      Serial.print("motorvalue[2] recieved: ");
       Serial.println(motorvalue[1]);
-      Serial.print("motorvalue[3]: ");
+      Serial.print("motorvalue[3] recieved: ");
       Serial.println(motorvalue[2]);
-      Serial.print("motorvalue[4]: ");
+      Serial.print("motorvalue[4] recieved: ");
       Serial.println(motorvalue[3]);
     }
 

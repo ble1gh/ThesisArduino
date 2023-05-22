@@ -31,8 +31,11 @@ Rc_oneside = Rc_data(length(Rc_data)/2+1:end);
 
 %fit data
 %[zfit1_Rc, gofz] = fit(side1_pos(3,:)',Rc_oneside','fourier5')
-[xfit1_Rc, gofx] = fit(side1_pos(1,10:end)',Rc_oneside(10:end)','exp2')
-[xfit2_Rc, gofx] = fit(side2_pos(1,10:end)',Rc_oneside(10:end)','exp2')
+% [xfit1_Rc, gofx] = fit(side1_pos(1,10:end)',Rc_oneside(10:end)','exp2')
+% [xfit2_Rc, gofx] = fit(side2_pos(1,10:end)',Rc_oneside(10:end)','exp2')
+
+[xfit1_Rc, gofx] = fit(side1_pos(1,:)',Rc_oneside','exp2')
+[xfit2_Rc, gofx] = fit(side2_pos(1,:)',Rc_oneside','exp2')
 
 figure(1)
 plot(zmod_Rc,z,Rc)
@@ -43,12 +46,13 @@ ylabel('Rc')
 xlabel('z')
 
 figure(2)
-plot(xmod_Rc,x,Rc)
+plot(xfit1_Rc,side1_pos(1,:),Rc_oneside)
 hold on; grid on;
-plot(side1_pos(1,:),Rc_oneside,'.')
-ylabel('Rc')
-xlabel('x')
-legend('model','model fit','data')
+plot(x,Rc,'Color',"#77AC30")
+ylabel('Rc (mm)')
+xlabel('x (mm)')
+legend('data','data fit','model')
+title('x vs Rc, Model vs Data')
 
 figure(3)
 plot(xfit1_Rc,side1_pos(1,:),Rc_oneside)

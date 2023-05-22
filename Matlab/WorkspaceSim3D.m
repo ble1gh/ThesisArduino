@@ -35,9 +35,18 @@ figure(1)
 %surf(x,y,z,'FaceColor','interp','FaceAlpha',0.9,'EdgeColor','none')
 surf(x,y,z,'FaceColor',"#4DBEEE",'FaceAlpha',0.7)
 title('Simulated Reachable Region, 3D')
-xlabel('x (m)')
-ylabel('y (m)')
-zlabel('z (m)')
-axis([-70 70 -70 70 0 80])
+xlabel('x (mm)')
+ylabel('y (mm)')
+zlabel('z (mm)')
+%axis([-70 70 -70 70 0 80])
+hold on; grid on; axis equal;
 
+% load spine model
+spine_stl = stlread('dual_helix.STL');
+[f_resamp,v_resamp] = reducepatch(spine_stl.ConnectivityList,spine_stl.Points,0.1);
+%spine tip in model space
+spine_tip_modelspace = [0,0,56]';
+
+figure(1)
+patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
 

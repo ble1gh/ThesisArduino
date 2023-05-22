@@ -29,10 +29,15 @@ side1_pos(3,:) = -side1_pos(3,:);
 side2_pos = xz_pos(:,length(xz_pos)/2+1:end);
 Rc_oneside = Rc_data(length(Rc_data)/2+1:end);
 
+%create combined data set from both theoretically identical sweeps
+both_sides = [side1_pos side2_pos];
+Rc_bothside = [Rc_oneside Rc_oneside];
+
 %fit data
 %[zfit1_Rc, gofz] = fit(side1_pos(3,:)',Rc_oneside','fourier5')
 [xfit1_Rc, gofx] = fit(side1_pos(1,:)',Rc_oneside','exp2')
 [xfit2_Rc, gofx] = fit(side2_pos(1,:)',Rc_oneside','exp2')
+[xfitboth_Rc, gofx] = fit(both_sides(1,:)',Rc_bothside','exp2')
 
 figure(1)
 plot(zmod_Rc,z,Rc)
@@ -57,3 +62,10 @@ plot(xfit2_Rc,side2_pos(1,:),Rc_oneside,'.')
 ylabel('Rc')
 xlabel('x')
 legend('data fit 1','side 1','data fit 2','side 2','Location','east')
+
+figure(4)
+plot(xfitboth_Rc,both_sides(1,:),Rc_bothside)
+hold on; grid on;
+ylabel('Rc')
+xlabel('x')
+%legend('data fit 1','side 1','data fit 2','side 2','Location','east')
