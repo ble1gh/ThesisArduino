@@ -2,7 +2,7 @@
 clear all
 
 %Establish serial connection
-device = serialport("/dev/tty.usbmodem1301",115200)
+device = serialport("/dev/tty.usbmodem11301",115200)
 flush(device);
 
 %Enter motor values
