@@ -14,7 +14,7 @@ regpt_spine = [c1 c2 c3 c4];
 penprobe_tip = load('tipcal.tip');
 
 % load registration points from aurora and apply tip compensation
-reg_tab = readtable('20230523_reg_001.csv','Delimiter',',');
+reg_tab = readtable('20230524_reg_001.csv','Delimiter',',');
 regpt_aurora = nan(size(regpt_spine));
 for pt_idx = 1:size(reg_tab,1)
     q = table2array(reg_tab(pt_idx,4:7));
@@ -33,7 +33,7 @@ spine_tip_modelspace = [0,0,L]';
 
 %coil to aurora transform, this is just using the first coil point, could
 %filter to use more accurate
-straight_tab = readtable('20230523_reg_001.csv','Delimiter',',');
+straight_tab = readtable('20230524_reg_001.csv','Delimiter',',');
 qcoil = table2array(straight_tab(2,4:7));
 tcoil = table2array(straight_tab(2,8:10));
 TF_coil_to_aurora = eye(4);
@@ -72,16 +72,18 @@ regpt_aurora_modelspace = hTF(regpt_aurora,TF_aurora_to_model);
 
 %plot
 figure(1)
-plot3(spinedata_in_modelspace(1,:),spinedata_in_modelspace(2,:),spinedata_in_modelspace(3,:),'.','Color',"#77AC30");
+plot3(regpt_aurora_modelspace(1,:),regpt_aurora_modelspace(2,:),regpt_aurora_modelspace(3,:),'g.','MarkerSize',50)
+%plot3(spinedata_in_modelspace(1,:),spinedata_in_modelspace(2,:),spinedata_in_modelspace(3,:),'.','Color',"#77AC30");
 hold on; grid on; axis equal;
 %plot3(coil_data_modelspace(1,:),coil_data_modelspace(2,:),coil_data_modelspace(3,:))
 %plot3(regpt_spine(1,:),regpt_spine(2,:),regpt_spine(3,:))
-%plot3(regpt_aurora_modelspace(1,:),regpt_aurora_modelspace(2,:),regpt_aurora_modelspace(3,:),'.','MarkerSize',30)
-%plot3(tip_at_registration_modelspace(1),tip_at_registration_modelspace(2),tip_at_registration_modelspace(3),'g.','MarkerSize',50);
+plot3(tip_at_registration_modelspace(1),tip_at_registration_modelspace(2),tip_at_registration_modelspace(3),'g.','MarkerSize',50);
 patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
-xlabel('x')
-ylabel('y')
-zlabel('z')
+xlabel('x (mm)')
+ylabel('y (mm)')
+zlabel('z (mm)')
+axis equal
+title('Rigid registration points with tip at known position')
 
 %write results to file to save
 writematrix(spinedata_in_modelspace,'transformed_output_0517_xz.csv')

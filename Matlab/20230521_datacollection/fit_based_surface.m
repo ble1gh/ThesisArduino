@@ -35,6 +35,12 @@ spine_stl = stlread('dual_helix.STL');
 [f_resamp,v_resamp] = reducepatch(spine_stl.ConnectivityList,spine_stl.Points,0.1);
 
 figure(1)
-surf(X,Y,Z)
+surf(X,Y,Z,'FaceColor',"#4DBEEE",'FaceAlpha',0.7)
 patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
+xlabel('x (mm)')
+ylabel('y (mm)')
+zlabel('z (mm)')
+title('Simulated data-based control surface','FontSize',16)
+%axis([-35 35 -35 35 -10 60])
+axis equal
 

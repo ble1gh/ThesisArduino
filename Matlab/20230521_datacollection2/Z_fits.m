@@ -72,7 +72,7 @@ zfits5 = [theta; zfits5];
 
 zfits5_full_circle = [zfits5(:,1:9) zfits5(:,11:19) zfits5(:,21:29) zfits5(:,31:40)];
 
-writematrix(zfits5_full_circle,'zfits_poly5_full_circle.csv')
+%writematrix(zfits5_full_circle,'zfits_poly5_full_circle.csv')
 
 %dlplane_onerep(1,:) = xfit_coeffs(1,i)*r_req.^4 + xfit_coeffs(2,i)*r_req.^3 + xfit_coeffs(3,i)*r_req.^2 + xfit_coeffs(4,i)*r_req.^1 + xfit_coeffs(5,i);
 
@@ -100,21 +100,29 @@ end
 r0 = zeros(1,res_theta);
 r = [r0; r(1:18,:); r0; r(19:18*2,:); r0; r(18*2+1:18*3,:)];
 
-xfits5 = zeros(6,res_theta);
+xfits3 = zeros(4,res_theta);
 
-figure(2)
-hold on; grid on;
-for i = 1:res_theta
-    [xfit_r, gofz] = fit(r(:,i),dl(:,i),'poly5');
-    xfits5(:,i) = [xfit_r.p1; xfit_r.p2; xfit_r.p3; xfit_r.p4; xfit_r.p5; xfit_r.p6];
-    plot(xfit_r,r(:,i),dl(:,i))
-end
-legend off
+% figure(2)
+% hold on; grid on;
+% for i = 1:res_theta
+%     [xfit_r, gofz] = fit(r(:,i),dl(:,i),'poly3');
+%     xfits3(:,i) = [xfit_r.p1; xfit_r.p2; xfit_r.p3; xfit_r.p4];% xfit_r.p5; xfit_r.p6];
+%     plot(xfit_r,r(:,i),dl(:,i))
+% end
+% legend off
 
-xfits5 = [theta; xfits5];
+[xfit_r, gofz] = fit(r(:,1),dl(:,1),'poly3');
+xfits3(:,1) = [xfit_r.p1; xfit_r.p2; xfit_r.p3; xfit_r.p4];% xfit_r.p5; xfit_r.p6];
+figure(3)
+plot(xfit_r,r(:,1),dl(:,1))
+xlabel('x (mm)')
+ylabel('Change in Cable Length (mm)')
 
-xfits5_full_circle = [xfits5(:,1:9) xfits5(:,11:19) xfits5(:,21:29) xfits5(:,31:40)];
 
-writematrix(xfits5_full_circle,'xfits_poly5_full_circle.csv');
+xfits3 = [theta; xfits3];
+
+xfits3_full_circle = [xfits3(:,1:9) xfits3(:,11:19) xfits3(:,21:29) xfits3(:,31:40)];
+
+%writematrix(xfits5_full_circle,'xfits_poly5_full_circle.csv');
 
 

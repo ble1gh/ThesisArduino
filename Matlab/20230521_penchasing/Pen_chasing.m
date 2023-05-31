@@ -122,7 +122,7 @@ while 1
     % 
     % vecnorm(regpt_spine-pendata_in_modelspace(:,rep))
 
-    pause(0.1)
+    pause(0.05)
     
     rep = rep + 1;
 end

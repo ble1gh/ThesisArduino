@@ -38,8 +38,7 @@ end
 
 %calculate error
 error = vecnorm(points_record(1:3,:)-pos_req);
-%unknowns = find(isnan(error));
-%error(unknowns) = 0;
+[mag idx] = max(error)
 avg_error = mean(error)
 
 %sort data into gridded form
@@ -61,11 +60,41 @@ plot3(requests(1,:),requests(2,:),requests(3,:),'.')
 patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
 
 figure(2)
-plot3(requests(1,:),requests(2,:),requests(3,:),'.')
-hold on; grid on;
+%plot3(requests(1,:),requests(2,:),requests(3,:),'.')
 plot3(points_record(1,:),points_record(2,:),points_record(3,:),'.')
+hold on; grid on;
 patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
-legend('Requests','Position Data')
+xlabel('x (mm)')
+ylabel('y (mm)')
+zlabel('z (mm)')
+title('Data-based control output data','FontSize',18)
+axis equal
 
 figure(3)
-plot3(requests(1,:),requests(2,:),requests(3,:),'.')
+plot(requests(1,1:18),requests(3,1:18),'.')
+hold on; grid on;
+plot(points_record(1,end-18:end),points_record(3,end-18:end),'.')
+
+%sort data into gridded form
+x = sortrows(pos_req(1,:)')';
+y = sortrows(pos_req(2,:)')';
+[X,Y] = meshgrid(x,y);
+Z = griddata(pos_req(1,:),pos_req(2,:),pos_req(3,:),X,Y);
+E = griddata(pos_req(1,:),pos_req(2,:),error,X,Y);
+
+thetamistake = 2*pi+atan2(pos_req(2,595:600),pos_req(1,595:600))
+
+figure(4)
+surf(X,Y,Z,E,'EdgeColor','none')
+colorbar
+hold on
+patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
+plot3(pos_req(1,:),pos_req(2,:),pos_req(3,:),'.')
+%plot3(points_record(1,595:600),points_record(2,595:600),points_record(3,595:600),'g.','MarkerSize',20)
+%plot3(pos_req(1,595:600),pos_req(2,595:600),pos_req(3,595:600),'m.','MarkerSize',20)
+xlabel('x (mm)')
+ylabel('y (mm)')
+zlabel('z (mm)')
+title('Data-based control surface with error (mm) as color','FontSize',18)
+axis equal
+clim([0 14]);

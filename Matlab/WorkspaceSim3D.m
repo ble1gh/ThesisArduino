@@ -1,12 +1,12 @@
 %Brook Leigh
 %Simulation of 3D reachable area for one segment
-clear
+clear; close all;
 
 L = 56; % (m) from spine architecture 
 
 %These values give a turn angle (theta) and a bend amount (Rc)
-minR = log10(3*L/(2*pi));
-maxR = log10(200);
+minR = log10(2.5*L/(pi));
+maxR = log10(1000);
 Rc = [logspace(minR,maxR,50)];
 
 %2 alternative ways to get acceptable Rc values
@@ -34,7 +34,7 @@ end
 figure(1)
 %surf(x,y,z,'FaceColor','interp','FaceAlpha',0.9,'EdgeColor','none')
 surf(x,y,z,'FaceColor',"#4DBEEE",'FaceAlpha',0.7)
-title('Simulated Reachable Region, 3D')
+title('Simulated Reachable Region, 3D Constant Curvature')
 xlabel('x (mm)')
 ylabel('y (mm)')
 zlabel('z (mm)')
