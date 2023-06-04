@@ -117,7 +117,7 @@ figure(3)
 plot(xfit_r,r(:,1),dl(:,1))
 xlabel('r (mm)')
 ylabel('Change in Cable Length (mm)')
-title('Cable length change vs radial displacement, theta = 0','FontSize',18)
+title('Cable length change vs radial displacement, xz plane','FontSize',18)
 grid on
 legend('data','4th order polynomial fit')
 
@@ -128,14 +128,12 @@ xfits3_full_circle = [xfits4(:,1:9) xfits4(:,11:19) xfits4(:,21:29) xfits4(:,31:
 
 %writematrix(xfits5_full_circle,'xfits_poly5_full_circle.csv');
 
-xfits4 = zeros(5,res_theta);
-
-[xfit_r, gofz] = fit(r(:,18),dl(:,18),'poly4');
+[xfit_r, gofz] = fit(r(:,10),dl(:,10),'poly4');
 xfits4(:,1) = [xfit_r.p1; xfit_r.p2; xfit_r.p3; xfit_r.p4; xfit_r.p5];% xfit_r.p6];
-figure(2)
-plot(xfit_r,r(:,18),dl(:,18))
+figure(3)
+plot(xfit_r,r(:,10),dl(:,1))
 xlabel('r (mm)')
 ylabel('Change in Cable Length (mm)')
-title('Cable length change vs radial displacement, theta = 2.27','FontSize',18)
+title('Cable length change vs radial displacement, xz plane','FontSize',18)
 grid on
 legend('data','4th order polynomial fit')

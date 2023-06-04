@@ -38,8 +38,9 @@ end
 
 %calculate error
 error = vecnorm(points_record(1:3,:)-pos_req);
-[mag idx] = max(error)
 avg_error = mean(error)
+[max_error, max_idx] = max(error)
+[min_error, min_idx] = min(error)
 
 %sort data into gridded form
 x = sortrows(points_record(1,:)')';
@@ -98,3 +99,14 @@ zlabel('z (mm)')
 title('Data-based control surface with error (mm) as color','FontSize',18)
 axis equal
 clim([0 14]);
+
+figure(5)
+plot(points_record(1,:),points_record(2,:),'.')
+hold on; grid on;
+plot(requests(1,:),requests(2,:),'.')
+xlabel('x (mm)')
+ylabel('y (mm)')
+zlabel('z (mm)')
+title('Data-based control output data','FontSize',18)
+axis equal
+legend('data','prediction')

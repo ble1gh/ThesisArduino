@@ -1,4 +1,4 @@
-clear; %close all;
+clear; close all;
 
 x_coeffs_tab = readtable("x_coeffs_full.csv");
 x_coeffs = table2array(x_coeffs_tab);
@@ -37,7 +37,6 @@ spine_stl = stlread('dual_helix.STL');
 
 figure(1)
 plot3(workspace(1,:),workspace(2,:),workspace(3,:),'.')
-patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
 grid on;
 
 pen = [20, -20, 70]';
@@ -51,3 +50,7 @@ figure(1)
 hold on
 plot3(pen(1),pen(2),pen(3),'g.','MarkerSize',30);
 plot3(req(1),req(2),req(3),'m.','MarkerSize',30)
+axis equal
+title('Discretized workspace with example pen-position and objective');
+patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
+legend('reachable points','pen','closest point')

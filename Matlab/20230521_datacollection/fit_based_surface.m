@@ -16,10 +16,11 @@ az = z_coeffs(2,:);
 bz = z_coeffs(3,:);
 cz = z_coeffs(4,:);
 dz = z_coeffs(5,:);
+%ez = z_coeffs(6,:);
 
 for i = 1:res_theta
     pos(:,(i-1)*res_curve+1:i*res_curve) = [r_req*cos(theta(i)); r_req*sin(theta(i));
-        az(i)*r_req.^3 + bz(i)*r_req.^2 + cz(i)*r_req.^1 + dz(i)];
+        az(i)*r_req.^3 + bz(i)*r_req.^2 + cz(i)*r_req.^1 + dz(i)];%*r_req + ez(i)];
 end
 
 %sort data into arranged (X,Y) grid with associated Z values
@@ -40,7 +41,7 @@ patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD"
 xlabel('x (mm)')
 ylabel('y (mm)')
 zlabel('z (mm)')
-title('Simulated data-based control surface','FontSize',16)
+title('Simulated data-based reachable surface','FontSize',16)
 %axis([-35 35 -35 35 -10 60])
 axis equal
 

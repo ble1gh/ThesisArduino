@@ -163,3 +163,23 @@ grid on;
 xlabel('r (mm)')
 ylabel('dl (mm)')
 title('Model Prediction, r vs Cable Length Change','FontSize',18)
+
+figure(7)
+plot(points_record(1,:,1,1),dlplane(:,1,1),'.','Markersize',10)
+hold on;
+plot(rmodel,dlmodel,'k','LineWidth',2)
+title('Cable Length Change vs Radial Displacement, xz Plane','FontSize',18)
+xlabel('r (mm)')
+ylabel('dl (mm)')
+legend('data','cc model')
+grid on;
+
+figure(8)
+plot(points_record(1,:,1,1)',points_record(3,:,1,1)','.','MarkerSize',10)
+hold on; grid on;
+plot(rmodel,zmodel,'k','LineWidth',2)
+title('Height vs Radial Displacement, xz Plane','FontSize',18)
+xlabel('r (mm)')
+ylabel('z (mm)')
+legend('data','prediction')
+%axis([0 35 0 60])
