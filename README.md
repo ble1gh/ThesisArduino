@@ -1,2 +1,2 @@
 # ThesisArduino
-Code for control of servo driver and servos in continuum robotics thesis, with accompanying MATLAB scripts for control
+Scripts for Arduino-based control of robotics thesis. The physical device that this code was written for is a single-segment, soft continuum robot that I built myself. It is cable driven, with four servo motors controlling cable length. These servos are controlled via Adafruit servo driver and Arduino Due. The project ended up being done mostly in Matlab, using the RecieveMotorPos script on the Arduino. The Matlab folder has all of the code for the control and serial communication from that side. 
