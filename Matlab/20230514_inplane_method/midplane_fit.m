@@ -1,21 +1,26 @@
 clear; close all;
 
-%physical length
-L = 56;
+%physical characteristics
+L = 56; % (mm) from spine architecture 
+d = 4; % (mm) "
 
 %model Rc range
 res =100;
-minR = log10(2*L/(pi));
-maxR = log10(300);
-Rc = -[logspace(minR,maxR,res/2)]';
+minR = log10(2.5*L/(pi));
+maxR = log10(1000);
+Rc = -[logspace(minR,maxR,res)]';
+phi = L./Rc;
 
 %model x and z
 z = Rc.*sin(L./Rc);
 x = -Rc.*(1-cos(L./Rc));
+dl = phi.*(Rc-d)-L;
 
 %model fits
-[zmod_Rc, gofz] = fit(z,Rc,'fourier4');
-[xmod_Rc, gofx] = fit(x,Rc,'exp2');
+[zmod_dl, gofz] = fit(z,Rc,'poly3')
+[xmod_dl, gofx] = fit(x,Rc,'poly4')
+
+
 
 %read in real data
 xz_tab = readtable('transformed_output_0514_midplane.csv','Delimiter',',');
@@ -40,18 +45,17 @@ Rc_bothside = [Rc_oneside Rc_oneside];
 [xfitboth_Rc, gofx] = fit(both_sides(1,:)',Rc_bothside','exp2')
 
 figure(1)
-plot(zmod_Rc,z,Rc)
+plot(zmod_dl,z,dl)
 hold on; grid on;
 %plot(zfit1_Rc,side1_pos(3,:),Rc_oneside)
 %legend('model','model fit','data','data fit','Location','southeast')
-ylabel('Rc')
+ylabel('dl')
 xlabel('z')
 
 figure(2)
-plot(xmod_Rc,x,Rc)
-hold on; grid on;
-plot(side1_pos(1,:),Rc_oneside,'.',side2_pos(1,:),Rc_oneside,'.')
-ylabel('Rc')
+plot(xmod_dl,x,dl)
+grid on;
+ylabel('dl')
 xlabel('x')
 legend('model','model fit','data side 1','data side 2')
 

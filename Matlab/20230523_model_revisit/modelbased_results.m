@@ -1,3 +1,4 @@
+%evaluation of constant curvature data collection
 clear; close all;
 
 %physical system parameters

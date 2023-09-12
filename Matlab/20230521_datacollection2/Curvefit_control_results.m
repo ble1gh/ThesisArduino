@@ -1,3 +1,4 @@
+%evaluation of accuracy of curve-fit control method
 clear; close all;
 
 %physical system parameters
@@ -27,13 +28,11 @@ az = interpn(fit_theta,zfits(2,:),theta);
 bz = interpn(fit_theta,zfits(3,:),theta);
 cz = interpn(fit_theta,zfits(4,:),theta);
 dz = interpn(fit_theta,zfits(5,:),theta);
-% ez = interpn(fit_theta,zfits(6,:),theta);
-% fz = interpn(fit_theta,zfits(7,:),theta);
 
 pos_req = zeros(3,res_curve*res_theta);
 for i = 1:res_theta
     pos_req(:,(i-1)*res_curve+1:i*res_curve) = [r_req.*cos(theta(i)); r_req.*sin(theta(i)); 
-    az(i)*r_req.^3 + bz(i)*r_req.^2 + cz(i)*r_req.^1 + dz(i)];%*r_req.^2 + ez(i)*r_req.^1 + fz(i)];
+    az(i)*r_req.^3 + bz(i)*r_req.^2 + cz(i)*r_req.^1 + dz(i)];
 end
 
 %calculate error
@@ -91,8 +90,6 @@ colorbar
 hold on
 patch('Vertices',v_resamp,'Faces',f_resamp,'EdgeColor','k','FaceColor',"#0072BD",'LineWidth',0.01);
 plot3(pos_req(1,:),pos_req(2,:),pos_req(3,:),'.')
-%plot3(points_record(1,595:600),points_record(2,595:600),points_record(3,595:600),'g.','MarkerSize',20)
-%plot3(pos_req(1,595:600),pos_req(2,595:600),pos_req(3,595:600),'m.','MarkerSize',20)
 xlabel('x (mm)')
 ylabel('y (mm)')
 zlabel('z (mm)')

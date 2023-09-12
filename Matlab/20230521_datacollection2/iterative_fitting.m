@@ -1,4 +1,6 @@
-
+%Script for finding polynomial fit coefficients for data-based control
+%approach. Data collected and coefficients calculated are output to csv
+%files
 clear;
 
 %physical system parameters
@@ -10,26 +12,30 @@ setmid = 350;
 
 %set frequency of sampling
 res_curve = 18;
-res_theta = 10;
+res_theta = 40;
 iterations = 3;
 
-%just starting with one quarter of the circle
-theta = linspace(3*pi/2,2*pi,res_theta);
+%create theta
+theta = linspace(0,2*pi,res_theta);
 
-%Read in previously calculated in plane fits
-fit_coeffs_tab = readtable("x_coeffs_Q4.csv");
+% Read in coefficients from any known data as a start. 
+% This example uses coefficients fit to the xz plane data from previous
+% trial runs that just used one iteration as a start point for every plane.
+% Starting coefficients could theoretically be calculated from the constant
+% cuvature model.
+fit_coeffs_tab = readtable("x_coeffs_Q1.csv");
 fit_coeffs_prev = table2array(fit_coeffs_tab);
-fit_coeffs_prev = fit_coeffs_prev(2:6,:);
+fit_coeffs_prev = fit_coeffs_prev(2:6,1);
 xfit_coeffs = zeros(5,iterations+1,res_theta);
-z_coeffs_tab = readtable("z_coeffs_Q4.csv");
+z_coeffs_tab = readtable("z_coeffs_Q1.csv");
 z_coeffs_prev = table2array(z_coeffs_tab);
-z_coeffs_prev = z_coeffs_prev(2:6,:);
+z_coeffs_prev = z_coeffs_prev(2:6,1);
 zfit_coeffs = zeros(5,iterations+1,res_theta);
-
 for i = 1:res_theta
-    xfit_coeffs(:,1,i) = fit_coeffs_prev(:,i);
-    zfit_coeffs(:,1,i) = z_coeffs_prev(:,i);
+    xfit_coeffs(:,1,i) = fit_coeffs_prev(:,1);
+    zfit_coeffs(:,1,i) = z_coeffs_prev(:,1);
 end
+
 %%
 
 %Establish serial connection to Arduino
@@ -193,9 +199,9 @@ for i = 1:res_theta
     z_avg_coeffs(2:6,i) = [zfit_motor1.p1; zfit_motor1.p2; zfit_motor1.p3; zfit_motor1.p4; zfit_motor1.p5];
 end
 
-writematrix(x_all_coeffs,'x_all_coeffs_Q4.csv')
-writematrix(z_all_coeffs,'z_all_coeffs_Q4.csv')
-writematrix(points_record,'points_record_Q4.csv')
-writematrix(dl_all_iterations,'dl_all_iterations_Q4.csv')
-writematrix(x_avg_coeffs,'x_avg_coeffs_Q4.csv')
-writematrix(z_avg_coeffs,'z_avg_coeffs_Q4.csv')
+writematrix(x_all_coeffs,'x_all_coeffs.csv')
+writematrix(z_all_coeffs,'z_all_coeffs.csv')
+writematrix(points_record,'points_record.csv')
+writematrix(dl_all_iterations,'dl_all_iterations.csv')
+writematrix(x_avg_coeffs,'x_avg_coeffs.csv')
+writematrix(z_avg_coeffs,'z_avg_coeffs.csv')
